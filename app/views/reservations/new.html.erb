@@ -1,0 +1,40 @@
+<h1>ご予約ページ</h1>
+
+<p>
+  <strong>選択中の映画:</strong>
+  <%= @reservation_movie_name %>
+</p>
+
+<p>
+  <strong>選択中の日時:</strong>
+  <%= @reservation_date %>
+</p>
+
+<p>
+  <strong>選択中の座席:</strong>
+  <%= @reservation_sheet %>
+</p>
+
+<p>
+  <strong>選択中のスケジュール:</strong>
+  <%= @reservation_schedule %>
+</p>
+
+<%= form_for @reservation, url: movie_schedule_reservations_path(@reservation.sheet, @reservation.schedule) do |f| %>
+  <%= f.hidden_field :date, value: @reservation_date %>
+  <%= f.hidden_field :sheet_id, value: @reservation.sheet.id %>
+  <%= f.hidden_field :schedule_id, value: @reservation.schedule.id %>
+  <div class="field">
+    <%= f.label :email, 'メールアドレス' %><br>
+    <%= f.text_field :email, value: current_user.email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :name, 'お名前' %><br>
+    <%= f.text_field :name, value: current_user.name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit '予約する' %>
+  </div>
+<% end %>

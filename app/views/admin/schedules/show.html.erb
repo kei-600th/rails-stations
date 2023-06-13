@@ -1,0 +1,7 @@
+<h1>Schedule Details</h1>
+
+<p><strong>Movie:</strong> <%= @schedule.movie.title %></p>
+<p><strong>Start Time:</strong> <%= @schedule.start_time.strftime("%H:%M") %></p>
+<p><strong>End Time:</strong> <%= @schedule.end_time.strftime("%H:%M") %></p>
+
+<%= link_to 'Back', admin_schedules_path %>

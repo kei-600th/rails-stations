@@ -1,0 +1,30 @@
+<h1>予約一覧</h1>
+
+<%= link_to '新規予約作成', new_admin_reservation_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>予約ID</th>
+      <th>映画作品</th>
+      <th>スクリーン</th>
+      <th>座席</th>
+      <th>日時</th>
+      <th>名前</th>
+      <th>メールアドレス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reservations.each do |reservation| %>
+      <tr>
+        <td><%= link_to reservation.id, admin_reservation_path(reservation) %></td>
+        <td><%= reservation.schedule.movie.name %></td>
+        <td><%= reservation.sheet.screen.id %></td>
+        <td><%= "#{reservation.sheet.row}-#{reservation.sheet.column}" %></td>
+        <td><%= reservation.date %></td>
+        <td><%= reservation.name %></td>
+        <td><%= reservation.email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

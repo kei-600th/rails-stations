@@ -1,0 +1,28 @@
+<h1><%= @movie.name %> (<%= @movie.year %>)</h1>
+
+<% if @movie.image_url.present? %>
+  <img src="<%= @movie.image_url %>" alt="<%= @movie.name %> Image" style="width:100px;height:auto;">
+<% else %>
+  <p>No image available</p>
+<% end %>
+
+<p><%= @movie.description %></p>
+
+<h2>Schedules</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movie.schedules.each do |schedule| %>
+      <tr>
+        <td><%= link_to schedule.start_time.strftime('%H:%M'), edit_admin_movie_schedule_path(@movie, schedule) %></td>
+        <td><%= link_to schedule.end_time.strftime('%H:%M'), edit_admin_movie_schedule_path(@movie, schedule) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'New Schedule', new_admin_movie_schedule_path(@movie) %>

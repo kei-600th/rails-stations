@@ -1,0 +1,57 @@
+<h1><%= @movie.name %> (<%= @movie.year %>)</h1>
+
+<% if @movie.image_url.present? %>
+  <img src="<%= @movie.image_url %>" alt="<%= @movie.name %> Image" style="width:100px;height:auto;">
+<% else %>
+  <p>No image available</p>
+<% end %>
+
+<p><%= @movie.description %></p>
+
+
+
+
+
+<%= form_with url: reservation_movie_path(@movie), method: :get do |form| %>
+  <div>
+    <label for="date">Date:</label>
+    <%= form.select :date, options_for_select(@dates.map { |date| [date.strftime('%Y-%m-%d'), date.strftime('%Y-%m-%d')] }) %>
+  </div>
+
+  <div>
+    <label for="schedule">Schedule:</label>
+    <%= form.select :schedule_id, options_from_collection_for_select(@movie.schedules, "id", "start_time") %>
+  </div>
+
+  <div>
+    <%= form.button '座席を予約する' %>
+  </div>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+<h2>Schedules</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movie.schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule.start_time.strftime('%H:%M') %></td>
+        <td><%= schedule.end_time.strftime('%H:%M') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

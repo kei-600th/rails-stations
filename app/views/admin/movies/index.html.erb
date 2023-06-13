@@ -1,0 +1,51 @@
+<h1>Movie List</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Year</th>
+      <th>Description</th>
+      <th>Actions</th> <!-- 追加 -->
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+        <tr>
+          <td>
+            <% if movie.image_url.present? %>
+              <img src="<%= movie.image_url %>" alt="<%= movie.name %> Image" style="width:100px;height:auto;">
+            <% else %>
+              <p>No image available</p>
+            <% end %>
+          </td>
+          <td><%= movie.name %></td>
+          <td><%= movie.year %></td>
+          <td><%= movie.description %></td>
+
+          <td>
+            <!-- 
+              下記の行は、この映画(movie)に関連する全てのスケジュールを選択します。
+              具体的には、全てのスケジュール(@schedules)から、スケジュールのmovie_idが
+              この映画のidと一致するものを選び出し、それらを新しい配列(movie_schedules)に代入します。
+            -->
+            <% movie_schedules = @schedules.select { |schedule| schedule.movie_id == movie.id } %>
+
+            
+            <% if movie_schedules.any? %>
+              <% movie_schedules.each do |schedule| %>
+                <p><%= schedule.start_time %> - <%= schedule.end_time %></p>
+              <% end %>
+            <% else %>
+              <p>No schedules available</p>
+            <% end %>
+          </td>
+
+          <td>
+            <%= link_to 'Edit', edit_admin_movie_path(movie) %> <!-- 追加 -->
+          </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
