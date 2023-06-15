@@ -19,8 +19,8 @@
       <tr>
         <td><%= link_to reservation.id, admin_reservation_path(reservation) %></td>
         <td><%= reservation.schedule.movie.name %></td>
-        <td><%= reservation.sheet.screen.id %></td>
-        <td><%= "#{reservation.sheet.row}-#{reservation.sheet.column}" %></td>
+        <td><%= reservation.screen_sheet.screen.id %></td>
+        <td><%= "#{reservation.screen_sheet.sheet.row}-#{reservation.screen_sheet.sheet.column}" %></td>
         <td><%= reservation.date %></td>
         <td><%= reservation.name %></td>
         <td><%= reservation.email %></td>

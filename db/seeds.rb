@@ -1,21 +1,20 @@
-screens = Screen.create!([{},{},{}])
+# db/seeds.rb
 
-screens.each do |screen|
-  screen.sheets.create!([
-    {column: 1, row: 'a'},
-    {column: 2, row: 'a'},
-    {column: 3, row: 'a'},
-    {column: 4, row: 'a'},
-    {column: 5, row: 'a'},
-    {column: 1, row: 'b'},
-    {column: 2, row: 'b'},
-    {column: 3, row: 'b'},
-    {column: 4, row: 'b'},
-    {column: 5, row: 'b'},
-    {column: 1, row: 'c'},
-    {column: 2, row: 'c'},
-    {column: 3, row: 'c'},
-    {column: 4, row: 'c'},
-    {column: 5, row: 'c'}
-  ])
+# screenレコードの作成
+3.times do |i|
+  Screen.create!(id: i + 1)
+end
+
+# sheetレコードの作成
+['a', 'b', 'c'].each do |row|
+  (1..5).each do |column|
+    Sheet.create!(column: column, row: row)
+  end
+end
+
+# screen_sheetレコードの作成
+Screen.all.each do |screen|
+  Sheet.all.each do |sheet|
+    ScreenSheet.create!(screen: screen, sheet: sheet)
+  end
 end

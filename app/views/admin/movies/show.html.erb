@@ -1,19 +1,19 @@
 <h1><%= @movie.name %> (<%= @movie.year %>)</h1>
 
 <% if @movie.image_url.present? %>
-  <img src="<%= @movie.image_url %>" alt="<%= @movie.name %> Image" style="width:100px;height:auto;">
+  <img src="https://picsum.photos/100/100" alt="<%= @movie.name %> Image" style="width:100px;height:auto;">
 <% else %>
   <p>No image available</p>
 <% end %>
 
 <p><%= @movie.description %></p>
 
-<h2>Schedules</h2>
+<h2>上映スケジュール一覧</h2>
 <table>
   <thead>
     <tr>
-      <th>Start Time</th>
-      <th>End Time</th>
+      <th>上映開始</th>
+      <th>上映終了</th>
     </tr>
   </thead>
   <tbody>
@@ -25,4 +25,5 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to 'New Schedule', new_admin_movie_schedule_path(@movie) %>
+<%= link_to 'スケジュールを追加する', new_admin_movie_schedule_path(@movie) %>
+<%= link_to '戻る', admin_movies_path %>

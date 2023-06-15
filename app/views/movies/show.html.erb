@@ -1,14 +1,12 @@
 <h1><%= @movie.name %> (<%= @movie.year %>)</h1>
 
 <% if @movie.image_url.present? %>
-  <img src="<%= @movie.image_url %>" alt="<%= @movie.name %> Image" style="width:100px;height:auto;">
+  <img src="https://picsum.photos/100/100" alt="<%= @movie.name %> Image" style="width:100px;height:auto;">
 <% else %>
   <p>No image available</p>
 <% end %>
 
 <p><%= @movie.description %></p>
-
-
 
 
 
@@ -20,7 +18,7 @@
 
   <div>
     <label for="schedule">Schedule:</label>
-    <%= form.select :schedule_id, options_from_collection_for_select(@movie.schedules, "id", "start_time") %>
+    <%= form.select :schedule_id, options_from_collection_for_select(@movie.schedules, "id", ->(schedule) { schedule.start_time.strftime('%H:%M') }) %>
   </div>
 
   <div>
@@ -28,17 +26,7 @@
   </div>
 <% end %>
 
-
-
-
-
-
-
-
-
-
-
-<h2>Schedules</h2>
+<h2>上映スケジュール一覧</h2>
 <table>
   <thead>
     <tr>
@@ -55,3 +43,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= link_to '映画一覧に戻る', movies_path %>

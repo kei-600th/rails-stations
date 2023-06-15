@@ -1,15 +1,22 @@
-<h1>reservation_view</h1>
+<h1>座席選択</h1>
 <table>
   <tbody>
     <% @sheets.group_by(&:row).each do |row, sheets| %>
       <tr>
         <% sheets.each do |sheet| %>
           <td>
-            <% if @reserved_sheet_ids.include?(sheet.id) %>
-              <%= "#{sheet.row}-#{sheet.column}" %>
+            <% candidate_screen_sheet = @candidate_screen_sheets[sheet.id - 1] %>
+            <% if candidate_screen_sheet == "予約不可" %>
+              <div class="seat unavailable">
+                <%= "#{sheet.row}-#{sheet.column}" %>
+              </div>
             <% else %>
-              <%= link_to "#{sheet.row}-#{sheet.column}", 
-                  new_movie_schedule_reservation_path(@movie, @schedule, date: @date, sheet_id: sheet.id) %>
+              <div class="seat">
+                <%= link_to "#{sheet.row}-#{sheet.column}", 
+                    new_movie_schedule_reservation_path(@movie, @schedule, date: @date,
+                    screen_sheet_id: candidate_screen_sheet.id
+                    ) %>
+              </div>
             <% end %>
           </td>
         <% end %>
@@ -17,3 +24,4 @@
     <% end %>
   </tbody>
 </table>
+<%= link_to '戻る', movie_path(@movie) %>

@@ -1,4 +1,4 @@
 class Sheet < ApplicationRecord
-  has_many :reservations
-  belongs_to :screen
+  has_many :screen_sheets
+  has_many :screens, through: :screen_sheets
 end

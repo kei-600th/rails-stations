@@ -1,4 +1,4 @@
-<h1>Edit Schedule for <%= @movie.name %></h1>
+<h1>スケジュール編集 (<%= @movie.name %>)</h1>
 
 <%= form_for([:admin, @movie, @schedule]) do |f| %>
   <div class="field">
@@ -16,5 +16,5 @@
   </div>
 <% end %>
 
-<%= link_to 'Delete Schedule', [:admin, @movie, @schedule], method: :delete, data: { confirm: 'Are you sure?' } %>
-<%= link_to 'Back', admin_movie_path(@movie) %>
+<%= link_to 'このスケジュールを削除する', [:admin, @movie, @schedule], method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to '戻る', admin_movie_path(@movie) %>

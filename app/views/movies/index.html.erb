@@ -1,7 +1,7 @@
-<h1>Movie List</h1>
+<h1>映画一覧</h1>
 
 <%= form_with(url: movies_path, method: :get, local: true) do |f| %>
-  <%= f.radio_button :is_showing, nil, checked: params[:is_showing].nil? %> <%= f.label :is_showing_all, 'すべて' %>
+  <%= f.radio_button :is_showing, '', checked: params[:is_showing].blank? %> <%= f.label :is_showing_all, 'すべて' %>
   <%= f.radio_button :is_showing, '0', checked: params[:is_showing] == '0' %> <%= f.label :is_showing_soon, '公開予定' %>
   <%= f.radio_button :is_showing, '1', checked: params[:is_showing] == '1' %> <%= f.label :is_showing_now, '公開中' %>
   <%= f.text_field :keyword, value: params[:keyword], placeholder: 'Search' %>
@@ -9,46 +9,26 @@
 <% end %>
 
 
-
-<table>
-  <thead>
-    <tr>
-      <th>Image</th>
-      <th>Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @movies.each do |movie| %>
-      <tr>
-        <td>
-          <% if movie.image_url.present? %>
-            <img src="<%= movie.image_url %>" alt="<%= movie.name %> Image" style="width:100px;height:auto;" onerror="this.onerror=null;this.src='https://picsum.photos/100/100';">
-          <% else %>
-            <p>No image available</p>
-          <% end %>
-        </td>
-        <td><%= link_to movie.name, movie_path(movie) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div class="row">
+  <% @movies.each do |movie| %>
+    <div class="col-md-4" style="width: 18rem;">
+      <div class="card mb-4">
+        <% if movie.image_url.present? %>
+          <img class="card-img-top" src="https://picsum.photos/100/100" alt="<%= movie.name %> Image" >
+        <% else %>
+          <div class="card-body">
+            <p class="card-text">No image available</p>
+          </div>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to movie.name, movie_path(movie) %></h5>
+          <p class="card-text"><%= "#{movie.year}年公開" %></p>
+          <p class="card-text"><%= movie.description %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <% if current_user %>
   User: <%= current_user.name %> <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>

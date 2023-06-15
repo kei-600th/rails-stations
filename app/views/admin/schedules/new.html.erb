@@ -1,4 +1,4 @@
-<h1>New Schedule for <%= @movie.name %></h1>
+<h1>スケジュール追加 (<%= @movie.name %>)</h1>
 
 <%= form_for([:admin, @movie, @schedule]) do |f| %>
   <div class="field">
@@ -16,4 +16,4 @@
   </div>
 <% end %>
 
-<%= link_to 'Back', admin_movie_path(@movie) %>
+<%= link_to '戻る', admin_movie_path(@movie) %>

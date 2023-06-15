@@ -13,3 +13,22 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap/scss/bootstrap";
+
+
+
+.seat {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  line-height: 30px;
+  text-align: center;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+.unavailable {
+  background-color: gray;
+}

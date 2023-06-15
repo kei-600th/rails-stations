@@ -20,9 +20,9 @@
   <%= @reservation_schedule %>
 </p>
 
-<%= form_for @reservation, url: movie_schedule_reservations_path(@reservation.sheet, @reservation.schedule) do |f| %>
+<%= form_for @reservation, url: movie_schedule_reservations_path(@reservation.screen_sheet, @reservation.schedule) do |f| %>
   <%= f.hidden_field :date, value: @reservation_date %>
-  <%= f.hidden_field :sheet_id, value: @reservation.sheet.id %>
+  <%= f.hidden_field :screen_sheet_id, value: @reservation.screen_sheet.id %>
   <%= f.hidden_field :schedule_id, value: @reservation.schedule.id %>
   <div class="field">
     <%= f.label :email, 'メールアドレス' %><br>
@@ -38,3 +38,5 @@
     <%= f.submit '予約する' %>
   </div>
 <% end %>
+
+<%= link_to '映画一覧に戻る', movies_path %>

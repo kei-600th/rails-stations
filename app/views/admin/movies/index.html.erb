@@ -1,51 +1,41 @@
-<h1>Movie List</h1>
+<h1>管理ページ 映画一覧</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Image</th>
-      <th>Name</th>
-      <th>Year</th>
-      <th>Description</th>
-      <th>Actions</th> <!-- 追加 -->
-    </tr>
-  </thead>
-  <tbody>
-    <% @movies.each do |movie| %>
-        <tr>
-          <td>
-            <% if movie.image_url.present? %>
-              <img src="<%= movie.image_url %>" alt="<%= movie.name %> Image" style="width:100px;height:auto;">
-            <% else %>
-              <p>No image available</p>
+<div class="row">
+  <% @movies.each do |movie| %>
+    <div class="col-md-4" style="width: 18rem;">
+      <div class="card mb-4">
+        <% if movie.image_url.present? %>
+          <img class="card-img-top" src="https://picsum.photos/100/100" alt="<%= movie.name %> Image">
+        <% else %>
+          <div class="card-body">
+            <p class="card-text">No image available</p>
+          </div>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= movie.name %></h5>
+          <p class="card-text"><%= movie.year %></p>
+          <p class="card-text"><%= movie.description %></p>
+          
+          <% movie_schedules = @schedules.select { |schedule| schedule.movie_id == movie.id } %>
+          <p class="card-text">
+            <%= link_to '上映スケジュール', admin_movie_path(movie) %>
+          </p>
+          <% if movie_schedules.any? %>
+            <% movie_schedules.each do |schedule| %>
+              <p class="card-text"><%= schedule.start_time.strftime('%H:%M') %> - <%= schedule.end_time.strftime('%H:%M') %></p>
             <% end %>
-          </td>
-          <td><%= movie.name %></td>
-          <td><%= movie.year %></td>
-          <td><%= movie.description %></td>
+          <% else %>
+            <p class="card-text">上映スケジュールはありません</p>
+          <% end %>
+          <p class="card-text">
+            <%= link_to '編集する', edit_admin_movie_path(movie) %>
+          </p>
 
-          <td>
-            <!-- 
-              下記の行は、この映画(movie)に関連する全てのスケジュールを選択します。
-              具体的には、全てのスケジュール(@schedules)から、スケジュールのmovie_idが
-              この映画のidと一致するものを選び出し、それらを新しい配列(movie_schedules)に代入します。
-            -->
-            <% movie_schedules = @schedules.select { |schedule| schedule.movie_id == movie.id } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-            
-            <% if movie_schedules.any? %>
-              <% movie_schedules.each do |schedule| %>
-                <p><%= schedule.start_time %> - <%= schedule.end_time %></p>
-              <% end %>
-            <% else %>
-              <p>No schedules available</p>
-            <% end %>
-          </td>
+<%= link_to '映画を追加する', new_admin_movie_path %>
 
-          <td>
-            <%= link_to 'Edit', edit_admin_movie_path(movie) %> <!-- 追加 -->
-          </td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
