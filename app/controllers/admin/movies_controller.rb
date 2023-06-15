@@ -16,6 +16,7 @@ class Admin::MoviesController < ApplicationController
 
   def show
     @movie = Movie.includes(:schedules).find(params[:id])
+    @cinemas = Cinema.all
   end
 
   def create

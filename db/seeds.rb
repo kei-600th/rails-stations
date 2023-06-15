@@ -18,3 +18,7 @@ Screen.all.each do |screen|
     ScreenSheet.create!(screen: screen, sheet: sheet)
   end
 end
+
+3.times do |i|
+  Cinema.create!(id: i + 1,name:"劇場#{i + 1}号館")
+end
