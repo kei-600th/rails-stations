@@ -8,7 +8,7 @@ class Admin::SchedulesController < ApplicationController
   end
 
   def new
-    @schedule = @movie.schedules.build
+    @schedule = @movie_cinema.schedules.build
   end
 
   def show
@@ -16,10 +16,10 @@ class Admin::SchedulesController < ApplicationController
   end
 
   def create
-    @schedule = @movie.schedules.build(schedule_params)
+    @schedule = @movie_cinema.schedules.build(schedule_params)
 
     if @schedule.save
-      redirect_to movie_path(@movie)
+      redirect_to admin_movie_movie_cinema_path(@movie_cinema.movie, @movie_cinema)
     else
       render :new
     end
@@ -30,7 +30,7 @@ class Admin::SchedulesController < ApplicationController
 
   def update
     if @schedule.update(schedule_params)
-      redirect_to admin_movie_path(@movie), notice: 'Schedule was successfully updated.'
+      redirect_to admin_movie_movie_cinema_path(@movie_cinema.movie, @movie_cinema), notice: 'Schedule was successfully updated.'
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class Admin::SchedulesController < ApplicationController
 
   def destroy
     @schedule.destroy
-    redirect_to admin_movie_path(@movie), notice: 'Schedule was successfully destroyed.'
+    redirect_to admin_movie_movie_cinema_path(@movie_cinema.movie, @movie_cinema), notice: 'Schedule was successfully destroyed.'
   end
 
 
@@ -46,11 +46,11 @@ class Admin::SchedulesController < ApplicationController
   private
 
   def set_movie
-    @movie = Movie.find(params[:movie_id])
+    @movie_cinema = MovieCinema.find(params[:movie_cinema_id])
   end
 
   def set_schedule
-    @schedule = @movie.schedules.find(params[:id])
+    @schedule = @movie_cinema.schedules.find(params[:id])
   end
 
   def schedule_params

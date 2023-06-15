@@ -1,0 +1,37 @@
+<h1><%= @movie_cinema.movie.name %> <%= @movie_cinema.cinema.name %>のスケジュール一覧</h1>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movie_cinema.schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule.start_time.strftime('%H:%M') %></td>
+        <td><%= schedule.end_time.strftime('%H:%M') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_with url: reservation_movie_path(@movie_cinema.movie), method: :get do |form| %>
+
+  <div>
+    <label for="date">Date:</label>
+    <%= form.select :date, options_for_select(@dates.map { |date| [date.strftime('%Y-%m-%d'), date.strftime('%Y-%m-%d')] }) %>
+  </div>
+  
+  <div>
+    <label for="schedule">Schedule:</label>
+    <%= form.select :schedule_id, options_from_collection_for_select(@movie_cinema.schedules, "id", ->(schedule) { schedule.start_time.strftime('%H:%M') }) %>
+  </div>
+  <div>
+    <%= form.button '座席を予約する' %>
+  </div>
+<% end %>
+
+<%= link_to '映画一覧に戻る', movies_path %>

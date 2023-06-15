@@ -13,9 +13,10 @@ class MoviesController < ApplicationController
   end
 
   def show
-    @movie = Movie.includes(:schedules).find(params[:id])
-    @schedules = @movie.schedules
-    @dates = (Date.today..Date.today + 6.days).to_a
+    @movie = Movie.includes(movie_cinemas: :schedules).find(params[:id])
+    @available_movie_cinemas = @movie.movie_cinemas.select do |movie_cinema|
+      movie_cinema.schedules.present?
+    end
   end
 
   def reservation
@@ -25,12 +26,17 @@ class MoviesController < ApplicationController
       @sheets = Sheet.all
       @date = params[:date]
       @schedule = Schedule.find(params[:schedule_id])
-      @movie = @schedule.movie
+      @movie = @schedule.movie_cinema.movie
 
       @booked_reservations = @schedule.reservations.where(date: @date)
       @booked_reservations_sheet_ids = @booked_reservations.pluck(:screen_sheet_id)
       test
     end
+  end
+
+  def show_schedules
+    @movie_cinema = MovieCinema.find(params[:movie_cinema_id])
+    @dates = (Date.today..Date.today + 6.days).to_a
   end
 
 

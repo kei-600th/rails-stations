@@ -9,7 +9,17 @@
     </tr>
   </thead>
   <tbody>
+    <% @movie_cinema.schedules.each do |schedule| %>
       <tr>
+        <td><%= link_to schedule.start_time.strftime('%H:%M'), edit_admin_movie_movie_cinema_schedule_path(@movie_cinema.movie, @movie_cinema, schedule) %></td>
+        <td><%= link_to schedule.end_time.strftime('%H:%M'), edit_admin_movie_movie_cinema_schedule_path(@movie_cinema.movie, @movie_cinema, schedule) %></td>
       </tr>
+    <% end %>
   </tbody>
 </table>
+<%= link_to 'スケジュールを追加する', new_admin_movie_movie_cinema_schedule_path(@movie_cinema.movie, @movie_cinema) %>
+<br>
+<%= link_to 'この映画館での上映を削除する', admin_movie_movie_cinema_path(@movie_cinema), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+<br>
+<%= link_to "戻る", admin_movie_path(@movie_cinema.movie) %>
+

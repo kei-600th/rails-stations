@@ -12,24 +12,15 @@
           </div>
         <% end %>
         <div class="card-body">
-          <h5 class="card-title"><%= movie.name %></h5>
+          <h5 class="card-title">
+            <%= link_to movie.name, edit_admin_movie_path(movie) %>
+          </h5>
           <p class="card-text"><%= movie.year %></p>
           <p class="card-text"><%= movie.description %></p>
-          
-          <% movie_schedules = @schedules.select { |schedule| schedule.movie_id == movie.id } %>
           <p class="card-text">
-            <%= link_to '上映スケジュール', admin_movie_path(movie) %>
+            <%= link_to "上映劇場を確認する", admin_movie_path(movie) %>
           </p>
-          <% if movie_schedules.any? %>
-            <% movie_schedules.each do |schedule| %>
-              <p class="card-text"><%= schedule.start_time.strftime('%H:%M') %> - <%= schedule.end_time.strftime('%H:%M') %></p>
-            <% end %>
-          <% else %>
-            <p class="card-text">上映スケジュールはありません</p>
-          <% end %>
-          <p class="card-text">
-            <%= link_to '編集する', edit_admin_movie_path(movie) %>
-          </p>
+        
 
         </div>
       </div>

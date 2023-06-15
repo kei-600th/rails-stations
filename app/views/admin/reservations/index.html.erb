@@ -7,6 +7,7 @@
     <tr>
       <th>予約ID</th>
       <th>映画作品</th>
+      <th>劇場</th>
       <th>スクリーン</th>
       <th>座席</th>
       <th>日時</th>
@@ -18,7 +19,8 @@
     <% @reservations.each do |reservation| %>
       <tr>
         <td><%= link_to reservation.id, admin_reservation_path(reservation) %></td>
-        <td><%= reservation.schedule.movie.name %></td>
+        <td><%= reservation.schedule.movie_cinema.movie.name %></td>
+        <td><%= reservation.schedule.movie_cinema.cinema.name %></td>
         <td><%= reservation.screen_sheet.screen.id %></td>
         <td><%= "#{reservation.screen_sheet.sheet.row}-#{reservation.screen_sheet.sheet.column}" %></td>
         <td><%= reservation.date %></td>

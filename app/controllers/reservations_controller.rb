@@ -8,7 +8,8 @@ class ReservationsController < ApplicationController
     else
       @reservation = Reservation.new(date: Date.parse(params[:date]), screen_sheet_id: params[:screen_sheet_id].to_i, schedule_id: params[:schedule_id].to_i)
   
-      @reservation_movie_name = @reservation.schedule.movie.name
+      @reservation_movie_name = @reservation.schedule.movie_cinema.movie.name
+      @reservation_cinema_name = @reservation.schedule.movie_cinema.cinema.name
       @reservation_date = @reservation.date
       @reservation_sheet = "#{@reservation.screen_sheet.sheet.row}-#{@reservation.screen_sheet.sheet.column}"
       @reservation_schedule = "#{@reservation.schedule.start_time.strftime('%H:%M')}-#{@reservation.schedule.end_time.strftime('%H:%M')}"

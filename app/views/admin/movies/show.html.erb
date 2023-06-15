@@ -8,25 +8,6 @@
 
 <p><%= @movie.description %></p>
 
-<h2>上映スケジュール一覧</h2>
-<table>
-  <thead>
-    <tr>
-      <th>上映開始</th>
-      <th>上映終了</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @movie.schedules.each do |schedule| %>
-      <tr>
-        <td><%= link_to schedule.start_time.strftime('%H:%M'), edit_admin_movie_schedule_path(@movie, schedule) %></td>
-        <td><%= link_to schedule.end_time.strftime('%H:%M'), edit_admin_movie_schedule_path(@movie, schedule) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= link_to 'スケジュールを追加する', new_admin_movie_schedule_path(@movie) %>
-
 <br>
 
 <h2>上映劇場一覧</h2>

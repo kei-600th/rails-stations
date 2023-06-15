@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :movies, only: [:index, :show] do
     member do
       get 'reservation'
+      get 'show_schedules'
     end
     resources :schedules, only: [:show] do
       resources :reservations, only: [:new, :create]
@@ -14,8 +15,9 @@ Rails.application.routes.draw do
   end
   namespace :admin do
     resources :movies, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-      resources :schedules, only: [:new, :create, :edit, :update, :destroy]
-      resources :movie_cinemas, only: [:show, :create, :destroy]
+      resources :movie_cinemas, only: [:show, :create, :destroy] do
+        resources :schedules, only: [:new, :create, :edit, :update, :destroy]
+      end
     end
     resources :schedules, only: [:index, :show]
     resources :reservations, only: [:index, :show, :new, :create, :update, :destroy]
