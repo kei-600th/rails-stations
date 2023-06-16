@@ -20,6 +20,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
   
     if @reservation.save
+      ReservationMailer.reservation_completed(@reservation).deliver_now
       redirect_to movies_path, notice: '予約が完了しました'
     else
       redirect_to reservation_movie_path(id: @reservation.schedule.movie.id, schedule_id: @reservation.schedule.id, date: @reservation.date)
