@@ -1,4 +1,29 @@
-<h1>映画一覧</h1>
+<h1>映画予約サイト</h1>
+
+<br>
+
+
+<h2>ランキング</h2>
+<div class="row">
+  <% @rankings.order(reservation_count: :desc).limit(5).each_with_index do |ranking, index| %>
+    <div class="col-md-4" style="width: 18rem;">
+      <div class="card mb-4">
+        <img class="card-img-top" src="https://picsum.photos/100/100" alt="<%= ranking.movie.name %> Image" >
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= link_to "#{index + 1}位: #{ranking.movie.name} (#{ranking.reservation_count}予約)", movie_path(ranking.movie) %>
+          </h5>
+          <p class="card-text"><%= "#{ranking.movie.year}年公開" %></p>
+          <p class="card-text"><%= ranking.movie.description %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<br>
+
+<h2>映画一覧</h2>
 
 <%= form_with(url: movies_path, method: :get, local: true) do |f| %>
   <%= f.radio_button :is_showing, '', checked: params[:is_showing].blank? %> <%= f.label :is_showing_all, 'すべて' %>

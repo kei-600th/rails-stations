@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   resources :sheets, only: [:index]
 
+  resources :rankings, only: [:index]
+
   resources :reservations, only: [:new, :create]
   # テスト用ルーティング
 end

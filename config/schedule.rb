@@ -14,3 +14,7 @@ ENV.each { |k, v| env(k, v) }
 every 1.day, at: Time.zone.parse('19:00').localtime do
   rake 'remind_reservations:send_reminders'
 end
+
+every :day, at: Time.zone.parse('00:00').localtime do
+  runner "Ranking.dayly_totalling"
+end

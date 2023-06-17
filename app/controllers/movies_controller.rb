@@ -10,6 +10,8 @@ class MoviesController < ApplicationController
     if params[:keyword].present?
       @movies = @movies.where('name LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
     end
+
+    @rankings = Ranking.where(date: Date.today)
   end
 
   def show
@@ -77,7 +79,6 @@ class MoviesController < ApplicationController
   def is_screen_reserved?(screen_sheet)
     @booked_reservations.any? { |reservation| reservation.screen_sheet_id == screen_sheet.id }
   end
-
 
 
 
