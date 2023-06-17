@@ -15,7 +15,7 @@
   <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">映画予約サービス</a>
+      <a class="navbar-brand" href="/">映画予約サービス</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -29,6 +29,9 @@
             <li class="nav-item">
               <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link' %>
             </li>
+            <% if current_user.admin? %>
+              <%= link_to "管理者ページ", admin_movies_path, class: 'nav-link' %>
+            <% end %>
           <% else %>
             <li class="nav-item">
               <%= link_to '新規登録', new_user_registration_path, class: 'nav-link' %>

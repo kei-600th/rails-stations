@@ -1,5 +1,7 @@
 class Admin::MoviesController < ApplicationController
 
+  before_action :check_if_admin
+
   def index
     @movies = Movie.all
     

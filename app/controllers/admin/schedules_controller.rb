@@ -1,5 +1,6 @@
 class Admin::SchedulesController < ApplicationController
-
+  
+  before_action :check_if_admin
   before_action :set_movie, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
 

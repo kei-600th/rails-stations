@@ -1,5 +1,7 @@
 class Admin::ReservationsController < ApplicationController
 
+  before_action :check_if_admin
+
   def index
     # 仕様では上映が終了した予約は表示しないとのことだが
     # 予約を全件表示するようにしないとテストが通らない

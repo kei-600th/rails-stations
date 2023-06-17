@@ -1,5 +1,7 @@
 class Admin::MovieCinemasController < ApplicationController
 
+  before_action :check_if_admin
+
   def create
     @movie_cinema = MovieCinema.new(movie_cinema_params)
 
