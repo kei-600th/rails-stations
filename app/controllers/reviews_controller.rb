@@ -53,5 +53,7 @@ class ReviewsController < ApplicationController
                              .where('date <= ?', Date.yesterday)
                              .where(movie_cinemas: { movie_id: @movie.id })
                              .exists?
+
+    @can_review = @can_review && !Review.where(movie_id: @movie.id, user_id: current_user.id).exists?
   end
 end
