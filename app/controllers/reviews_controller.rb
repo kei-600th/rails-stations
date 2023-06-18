@@ -11,13 +11,13 @@ class ReviewsController < ApplicationController
 
   def create
     if !@can_review
-      flash[:alert] = "過去に視聴した映画に対するレビューのみ投稿可能です。"
+      flash.now[:alert] = "過去に視聴した映画に対するレビューのみ投稿可能です。"
       render :index
     else
-      @review = @movie.reviews.new(review_params)
+      @review = Review.new(review_params)
       @review.user_id = current_user.id
       if @review.evaluation.nil?
-        flash[:alert] = "Evaluation must not be nil."
+        flash.now[:alert] = "星1~星5までの評価を選択してください"
         render :index
       elsif @review.save
         redirect_to movie_reviews_path(@movie)
@@ -44,7 +44,7 @@ class ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:evaluation, :comment)
+    params.require(:review).permit(:evaluation, :comment).merge(movie_id: params[:movie_id])
   end
 
   def check_reservation
