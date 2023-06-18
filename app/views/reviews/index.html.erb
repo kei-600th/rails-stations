@@ -1,0 +1,71 @@
+<h1>レビューページ</h1>
+
+<br>
+
+<p>このアプリから映画の予約をお取りしたユーザーは、視聴した映画1つにつき1つレビューを投稿できます。(視聴した日の翌日以降)</p>
+
+<%# バリデーションエラーを表示 %>
+<% if @review.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+    <ul>
+    <% @review.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" style="width: 20%">投稿日時</th>
+      <th scope="col" style="width: 10%">評価</th>
+      <th scope="col" style="width: 50%">コメント</th>
+      <% if current_user.admin %>
+        <th scope="col" style="width: 20%">操作</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= review.created_at.strftime('%m-%d %I:%M') %></td>
+        <td>
+          <% review.evaluation.times do %>
+            <%= image_tag("star-on.png") %>
+          <% end %>
+        </td>
+        <td><%= review.comment %></td>
+        <% if current_user.admin %>
+          <td>
+            <%= link_to '削除', movie_review_path(@movie, review), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<% if @can_review %>
+  <%= form_with model: [ @movie, @review ], local: true, class: 'row gx-3 gy-2 align-items-center' do |f| %>
+    <div class="col-sm-2">
+      <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+      <%= f.select :evaluation, options_for_select([['星1 ~ 星5の評価を選択', nil], ['★☆☆☆☆', 1], ['★★☆☆☆', 2], ['★★★☆☆', 3], ['★★★★☆', 4], ['★★★★★', 5]]), {}, { class: 'form-select', id: 'specificSizeSelect' } %>
+    </div>
+    <div class="col-sm-7">
+      <label class="visually-hidden" for="specificSizeInputName">Name</label>
+      <%= f.text_field :comment, class: 'form-control', id: 'specificSizeInputName', placeholder: 'コメントを記述' %>
+    </div>
+    <div class="col-auto">
+      <%= f.submit "送信", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>過去に視聴した映画に対するレビューのみ投稿可能です。</p>
+<% end %>
+
+<br>
+<%= link_to '戻る', movie_path(@movie) %>
