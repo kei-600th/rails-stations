@@ -11,10 +11,10 @@ Time.zone = 'Tokyo'
 
 ENV.each { |k, v| env(k, v) }
 
-every 1.day, at: Time.zone.parse('19:00').localtime do
+every 1.day, at: Time.zone.parse('14:42').localtime do
   rake 'remind_reservations:send_reminders'
 end
 
-every :day, at: Time.zone.parse('00:00').localtime do
+every :day, at: Time.zone.parse('14:05').localtime do
   runner "Ranking.dayly_totalling"
 end

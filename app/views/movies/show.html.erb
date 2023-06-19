@@ -8,18 +8,20 @@
 
 <p><%= @movie.description %></p>
 
+<% if @available_movie_cinemas.present? %>
 
+  <%= form_with url: show_schedules_movie_path(@movie), method: :get do |form| %>
 
-<%= form_with url: show_schedules_movie_path(@movie), method: :get do |form| %>
+    <div>
+      <label for="schedule">劇場:</label>
+      <%= form.select :movie_cinema_id, options_from_collection_for_select(@available_movie_cinemas, "id", ->(movie_cinema) { movie_cinema.cinema.name }) %>
+    </div>
 
-  <div>
-    <label for="schedule">劇場:</label>
-    <%= form.select :movie_cinema_id, options_from_collection_for_select(@available_movie_cinemas, "id", ->(movie_cinema) { movie_cinema.cinema.name }) %>
-  </div>
+    <div>
+      <%= form.button 'スケジュールを確認する' %>
+    </div>
+  <% end %>
 
-  <div>
-    <%= form.button 'スケジュールを確認する' %>
-  </div>
 <% end %>
 
 <h2>上映劇場一覧</h2>
@@ -30,13 +32,15 @@
     </tr>
   </thead>
   <tbody>
-    <% @movie.movie_cinemas.each do |movie_cinema| %>
+    <% @available_movie_cinemas.each do |movie_cinema| %>
       <tr>
         <td><%= movie_cinema.cinema.name %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<br>
 
 <%= link_to 'レビューを見る', movie_reviews_path(@movie) %>
 

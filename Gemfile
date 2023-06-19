@@ -33,6 +33,7 @@ gem 'bootstrap', '~> 5.0.2'
 
 gem 'devise'
 gem 'whenever', require: false
+gem 'pry-byebug', '~> 3.9'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -42,7 +43,6 @@ group :development, :test do
   gem "bullet"
   gem 'rails-controller-testing'
   gem 'capybara'
-  gem 'pry-byebug', '~> 3.9'
 end
 
 group :development do

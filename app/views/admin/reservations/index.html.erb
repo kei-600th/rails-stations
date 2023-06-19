@@ -6,11 +6,12 @@
   <thead>
     <tr>
       <th>予約ID</th>
+      <th>予約受付時刻</th>
+      <th>案内日</th>
       <th>映画作品</th>
       <th>劇場</th>
       <th>スクリーン</th>
       <th>座席</th>
-      <th>日時</th>
       <th>名前</th>
       <th>メールアドレス</th>
     </tr>
@@ -19,11 +20,12 @@
     <% @reservations.each do |reservation| %>
       <tr>
         <td><%= link_to reservation.id, admin_reservation_path(reservation) %></td>
+        <td><%= reservation.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td><%= reservation.date %></td>
         <td><%= reservation.schedule.movie_cinema.movie.name %></td>
         <td><%= reservation.schedule.movie_cinema.cinema.name %></td>
         <td><%= reservation.screen_sheet.screen.id %></td>
         <td><%= "#{reservation.screen_sheet.sheet.row}-#{reservation.screen_sheet.sheet.column}" %></td>
-        <td><%= reservation.date %></td>
         <td><%= reservation.name %></td>
         <td><%= reservation.email %></td>
       </tr>

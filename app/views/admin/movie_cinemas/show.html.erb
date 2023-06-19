@@ -4,6 +4,7 @@
 <table>
   <thead>
     <tr>
+      <th>スケジュールID</th>
       <th>上映開始</th>
       <th>上映終了</th>
     </tr>
@@ -11,8 +12,9 @@
   <tbody>
     <% @movie_cinema.schedules.each do |schedule| %>
       <tr>
-        <td><%= link_to schedule.start_time.strftime('%H:%M'), edit_admin_movie_movie_cinema_schedule_path(@movie_cinema.movie, @movie_cinema, schedule) %></td>
-        <td><%= link_to schedule.end_time.strftime('%H:%M'), edit_admin_movie_movie_cinema_schedule_path(@movie_cinema.movie, @movie_cinema, schedule) %></td>
+        <td><%= link_to schedule.id, edit_admin_movie_movie_cinema_schedule_path(@movie_cinema.movie, @movie_cinema, schedule) %></td>
+        <td><%= schedule.start_time.strftime('%H:%M') %></td>
+        <td><%= schedule.end_time.strftime('%H:%M') %></td>
       </tr>
     <% end %>
   </tbody>
