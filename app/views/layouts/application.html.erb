@@ -43,7 +43,11 @@
         </ul>
       </div>
     </nav>
-
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <%= message %>
+      </div>
+    <% end %>
 
     <%= yield %>
   </body>
